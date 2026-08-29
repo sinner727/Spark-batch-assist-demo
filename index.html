@@ -405,7 +405,80 @@
 
 }
 
-#shoppingScreen {
+.guided-shop {
+
+  margin-bottom: 20px;
+
+}
+
+.guided-card {
+
+  background: white;
+
+  border-radius: 16px;
+
+  padding: 22px;
+
+  text-align: center;
+
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+
+  border: 3px solid #0071dc;
+
+}
+
+.guided-label {
+
+  font-size: 12px;
+
+  font-weight: bold;
+
+  color: #6b7280;
+
+  margin-bottom: 8px;
+
+}
+
+.guided-card h2 {
+
+  color: #0071dc;
+
+  margin-bottom: 8px;
+
+}
+
+.guided-card h3 {
+
+  font-size: 24px;
+
+  margin-bottom: 8px;
+
+}
+
+.guided-card p {
+
+  margin-bottom: 14px;
+
+}
+
+.guided-cart-side {
+
+  background: #e0f2fe;
+
+  color: #075985;
+
+  font-weight: bold;
+
+  padding: 14px;
+
+  border-radius: 10px;
+
+  margin-bottom: 18px;
+
+  font-size: 18px;
+
+}
+    #shoppingScreen {
 
   display: none;
 
@@ -481,7 +554,33 @@
     <div id="progressText">0 of 8 items picked</div>
 
   </section>
+<section class="guided-shop" id="guidedShop">
 
+  <div class="guided-card">
+
+    <p class="guided-label">CURRENT ITEM</p>
+
+    <h2 id="guidedCustomer">Customer A</h2>
+
+    <h3 id="guidedItem">Whole Milk</h3>
+
+    <p id="guidedLocation">Dairy • Aisle 12</p>
+
+    <div class="guided-cart-side" id="guidedCartSide">
+
+      Place on CART SIDE A
+
+    </div>
+
+    <button class="start-button" onclick="completeGuidedItem()">
+
+      Item Picked
+
+    </button>
+
+  </div>
+
+</section>
   <section class="orders">
 
     <!-- CUSTOMER A -->
@@ -768,6 +867,130 @@ function startBatch() {
   document.getElementById("shoppingScreen").style.display = "block";
 
   window.scrollTo(0, 0);
+
+}const guidedItems = [
+
+  {
+
+    customer: "Customer A",
+
+    item: "Whole Milk",
+
+    location: "Dairy • Aisle 12",
+
+    side: "Place on CART SIDE A"
+
+  },
+
+  {
+
+    customer: "Customer A",
+
+    item: "Large Eggs",
+
+    location: "Dairy • Aisle 12",
+
+    side: "Place on CART SIDE A"
+
+  },
+
+  {
+
+    customer: "Customer A",
+
+    item: "White Bread",
+
+    location: "Bakery • Aisle 8",
+
+    side: "Place on CART SIDE A"
+
+  },
+
+  {
+
+    customer: "Customer A",
+
+    item: "Bananas",
+
+    location: "Produce",
+
+    side: "Place on CART SIDE A"
+
+  },
+
+  {
+
+    customer: "Customer B",
+
+    item: "Orange Juice",
+
+    location: "Refrigerated • Aisle 13",
+
+    side: "Place on CART SIDE B"
+
+  },
+
+  {
+
+    customer: "Customer B",
+
+    item: "Ground Beef",
+
+    location: "Meat Department",
+
+    side: "Place on CART SIDE B"
+
+  },
+
+  {
+
+    customer: "Customer B",
+
+    item: "Potato Chips",
+
+    location: "Snacks • Aisle 5",
+
+    side: "Place on CART SIDE B"
+
+  },
+
+  {
+
+    customer: "Customer B",
+
+    item: "Bottled Water",
+
+    location: "Beverages • Aisle 16",
+
+    side: "Place on CART SIDE B"
+
+  }
+
+];
+
+let guidedIndex = 0;
+
+function completeGuidedItem() {
+
+  guidedIndex++;
+
+  if (guidedIndex >= guidedItems.length) {
+
+    document.getElementById("guidedShop").style.display = "none";
+
+    return;
+
+  }
+
+  const current = guidedItems[guidedIndex];
+
+  document.getElementById("guidedCustomer").textContent = current.customer;
+
+  document.getElementById("guidedItem").textContent = current.item;
+
+  document.getElementById("guidedLocation").textContent = current.location;
+
+  document.getElementById("guidedCartSide").textContent = current.side;
 
 }
   const totalItems = 8;
