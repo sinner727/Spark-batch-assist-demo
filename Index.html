@@ -1,1 +1,703 @@
+<!DOCTYPE html>
 
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Spark Batch Assist Demo</title>
+
+  <style>
+
+    * {
+
+      box-sizing: border-box;
+
+      margin: 0;
+
+      padding: 0;
+
+    }
+
+    body {
+
+      font-family: Arial, Helvetica, sans-serif;
+
+      background: #f5f7fa;
+
+      color: #1f2937;
+
+    }
+
+    header {
+
+      background: #0071dc;
+
+      color: white;
+
+      padding: 18px;
+
+      text-align: center;
+
+    }
+
+    header h1 {
+
+      font-size: 24px;
+
+      margin-bottom: 5px;
+
+    }
+
+    header p {
+
+      font-size: 14px;
+
+      opacity: 0.9;
+
+    }
+
+    .container {
+
+      max-width: 1000px;
+
+      margin: auto;
+
+      padding: 20px;
+
+    }
+
+    .batch-info {
+
+      background: white;
+
+      border-radius: 14px;
+
+      padding: 18px;
+
+      margin-bottom: 20px;
+
+      box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+
+    }
+
+    .batch-info h2 {
+
+      margin-bottom: 8px;
+
+    }
+
+    .progress-bar {
+
+      background: #e5e7eb;
+
+      height: 14px;
+
+      border-radius: 20px;
+
+      overflow: hidden;
+
+      margin-top: 12px;
+
+    }
+
+    .progress {
+
+      width: 0%;
+
+      height: 100%;
+
+      background: #ffc220;
+
+      transition: width 0.3s ease;
+
+    }
+
+    #progressText {
+
+      margin-top: 8px;
+
+      font-weight: bold;
+
+    }
+
+    .orders {
+
+      display: grid;
+
+      grid-template-columns: 1fr 1fr;
+
+      gap: 20px;
+
+    }
+
+    .order {
+
+      background: white;
+
+      border-radius: 16px;
+
+      overflow: hidden;
+
+      box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+
+    }
+
+    .order-header {
+
+      padding: 18px;
+
+      color: white;
+
+    }
+
+    .customer-a .order-header {
+
+      background: #0071dc;
+
+    }
+
+    .customer-b .order-header {
+
+      background: #6b21a8;
+
+    }
+
+    .order-header h2 {
+
+      margin-bottom: 5px;
+
+    }
+
+    .cart-location {
+
+      background: rgba(255, 255, 255, 0.2);
+
+      display: inline-block;
+
+      padding: 5px 10px;
+
+      border-radius: 12px;
+
+      margin-top: 7px;
+
+      font-weight: bold;
+
+    }
+
+    .items {
+
+      padding: 15px;
+
+    }
+
+    .item {
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: space-between;
+
+      padding: 14px;
+
+      margin-bottom: 10px;
+
+      background: #f8fafc;
+
+      border-radius: 10px;
+
+      border: 1px solid #e5e7eb;
+
+    }
+
+    .item-info h3 {
+
+      font-size: 16px;
+
+      margin-bottom: 4px;
+
+    }
+
+    .item-info p {
+
+      font-size: 13px;
+
+      color: #6b7280;
+
+    }
+
+    button {
+
+      border: none;
+
+      padding: 9px 14px;
+
+      border-radius: 8px;
+
+      cursor: pointer;
+
+      font-weight: bold;
+
+    }
+
+    .pick-button {
+
+      background: #ffc220;
+
+      color: #111827;
+
+    }
+
+    .picked {
+
+      background: #dcfce7;
+
+      border: 1px solid #22c55e;
+
+    }
+
+    .picked button {
+
+      background: #22c55e;
+
+      color: white;
+
+    }
+
+    .warning {
+
+      margin-top: 20px;
+
+      background: #fff7ed;
+
+      border-left: 5px solid #f97316;
+
+      padding: 15px;
+
+      border-radius: 8px;
+
+    }
+
+    .complete-message {
+
+      display: none;
+
+      margin-top: 20px;
+
+      background: #dcfce7;
+
+      border: 2px solid #22c55e;
+
+      padding: 20px;
+
+      border-radius: 12px;
+
+      text-align: center;
+
+    }
+
+    @media (max-width: 700px) {
+
+      .orders {
+
+        grid-template-columns: 1fr;
+
+      }
+
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+<header>
+
+  <h1>⚡ Spark Batch Assist</h1>
+
+  <p>Demo — Batch Order Separation Assistant</p>
+
+</header>
+
+<main class="container">
+
+  <section class="batch-info">
+
+    <h2>Batch #SBA-1027</h2>
+
+    <p>
+
+      Keep each customer's groceries separated while shopping.
+
+    </p>
+
+    <div class="progress-bar">
+
+      <div class="progress" id="progress"></div>
+
+    </div>
+
+    <div id="progressText">0 of 8 items picked</div>
+
+  </section>
+
+  <section class="orders">
+
+    <!-- CUSTOMER A -->
+
+    <div class="order customer-a">
+
+      <div class="order-header">
+
+        <h2>Customer A</h2>
+
+        <p>4 items</p>
+
+        <div class="cart-location">
+
+          CART SIDE A
+
+        </div>
+
+      </div>
+
+      <div class="items">
+
+        <div class="item">
+
+          <div class="item-info">
+
+            <h3>Whole Milk</h3>
+
+            <p>Dairy • Aisle 12</p>
+
+          </div>
+
+          <button
+
+            class="pick-button"
+
+            onclick="pickItem(this)"
+
+          >
+
+            Pick
+
+          </button>
+
+        </div>
+
+        <div class="item">
+
+          <div class="item-info">
+
+            <h3>Large Eggs</h3>
+
+            <p>Dairy • Aisle 12</p>
+
+          </div>
+
+          <button
+
+            class="pick-button"
+
+            onclick="pickItem(this)"
+
+          >
+
+            Pick
+
+          </button>
+
+        </div>
+
+        <div class="item">
+
+          <div class="item-info">
+
+            <h3>White Bread</h3>
+
+            <p>Bakery • Aisle 8</p>
+
+          </div>
+
+          <button
+
+            class="pick-button"
+
+            onclick="pickItem(this)"
+
+          >
+
+            Pick
+
+          </button>
+
+        </div>
+
+        <div class="item">
+
+          <div class="item-info">
+
+            <h3>Bananas</h3>
+
+            <p>Produce</p>
+
+          </div>
+
+          <button
+
+            class="pick-button"
+
+            onclick="pickItem(this)"
+
+          >
+
+            Pick
+
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- CUSTOMER B -->
+
+    <div class="order customer-b">
+
+      <div class="order-header">
+
+        <h2>Customer B</h2>
+
+        <p>4 items</p>
+
+        <div class="cart-location">
+
+          CART SIDE B
+
+        </div>
+
+      </div>
+
+      <div class="items">
+
+        <div class="item">
+
+          <div class="item-info">
+
+            <h3>Orange Juice</h3>
+
+            <p>Refrigerated • Aisle 13</p>
+
+          </div>
+
+          <button
+
+            class="pick-button"
+
+            onclick="pickItem(this)"
+
+          >
+
+            Pick
+
+          </button>
+
+        </div>
+
+        <div class="item">
+
+          <div class="item-info">
+
+            <h3>Ground Beef</h3>
+
+            <p>Meat Department</p>
+
+          </div>
+
+          <button
+
+            class="pick-button"
+
+            onclick="pickItem(this)"
+
+          >
+
+            Pick
+
+          </button>
+
+        </div>
+
+        <div class="item">
+
+          <div class="item-info">
+
+            <h3>Potato Chips</h3>
+
+            <p>Snacks • Aisle 5</p>
+
+          </div>
+
+          <button
+
+            class="pick-button"
+
+            onclick="pickItem(this)"
+
+          >
+
+            Pick
+
+          </button>
+
+        </div>
+
+        <div class="item">
+
+          <div class="item-info">
+
+            <h3>Bottled Water</h3>
+
+            <p>Beverages • Aisle 16</p>
+
+          </div>
+
+          <button
+
+            class="pick-button"
+
+            onclick="pickItem(this)"
+
+          >
+
+            Pick
+
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <div class="warning">
+
+    <strong>⚠ Order Separation Reminder</strong>
+
+    <p>
+
+      Customer A items go on CART SIDE A.
+
+      Customer B items go on CART SIDE B.
+
+    </p>
+
+  </div>
+
+  <div
+
+    class="complete-message"
+
+    id="completeMessage"
+
+  >
+
+    <h2>✅ Batch Shopping Complete</h2>
+
+    <p>
+
+      All items have been picked and separated by customer.
+
+    </p>
+
+  </div>
+
+</main>
+
+<script>
+
+  const totalItems = 8;
+
+  let pickedItems = 0;
+
+  function pickItem(button) {
+
+    const item = button.parentElement;
+
+    if (!item.classList.contains("picked")) {
+
+      item.classList.add("picked");
+
+      button.textContent = "✓ Picked";
+
+      pickedItems++;
+
+    } else {
+
+      item.classList.remove("picked");
+
+      button.textContent = "Pick";
+
+      pickedItems--;
+
+    }
+
+    updateProgress();
+
+  }
+
+  function updateProgress() {
+
+    const percentage =
+
+      (pickedItems / totalItems) * 100;
+
+    document.getElementById("progress").style.width =
+
+      percentage + "%";
+
+    document.getElementById("progressText").textContent =
+
+      pickedItems +
+
+      " of " +
+
+      totalItems +
+
+      " items picked";
+
+    if (pickedItems === totalItems) {
+
+      document.getElementById(
+
+        "completeMessage"
+
+      ).style.display = "block";
+
+    } else {
+
+      document.getElementById(
+
+        "completeMessage"
+
+      ).style.display = "none";
+
+    }
+
+  }
+
+</script>
+
+</body>
+
+</html>
