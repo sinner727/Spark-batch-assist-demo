@@ -997,11 +997,27 @@ function completeGuidedItem() {
 
   if (guidedIndex >= guidedItems.length) {
 
-    document.getElementById("guidedShop").style.display = "none";
+  document.getElementById("guidedShop").innerHTML = `
 
-    return;
+    <div class="guided-card">
 
-  }
+      <h2>✅ Batch Complete</h2>
+
+      <p>All 8 items have been picked and separated correctly.</p>
+
+      <div class="guided-cart-side">
+
+        Ready for checkout
+
+      </div>
+
+    </div>
+
+  `;
+
+  return;
+
+}
 
   const current = guidedItems[guidedIndex];
 
