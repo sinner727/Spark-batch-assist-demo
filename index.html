@@ -973,6 +973,26 @@ let guidedIndex = 0;
 
 function completeGuidedItem() {
 
+  const item = document.querySelectorAll(".item")[guidedIndex];
+
+  if (item && !item.classList.contains("picked")) {
+
+    item.classList.add("picked");
+
+    const button = item.querySelector(".pick-button");
+
+    if (button) {
+
+      button.textContent = "✓ Picked";
+
+    }
+
+    pickedItems++;
+
+    updateProgress();
+
+  }
+
   guidedIndex++;
 
   if (guidedIndex >= guidedItems.length) {
