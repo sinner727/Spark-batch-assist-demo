@@ -309,13 +309,149 @@
       }
 
     }
+.start-screen {
 
+  min-height: 100vh;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  padding: 24px;
+
+  background: #f5f7fa;
+
+}
+
+.start-card {
+
+  background: white;
+
+  width: 100%;
+
+  max-width: 430px;
+
+  padding: 30px;
+
+  border-radius: 18px;
+
+  text-align: center;
+
+  box-shadow: 0 4px 18px rgba(0,0,0,0.10);
+
+}
+
+.start-logo {
+
+  font-size: 48px;
+
+  margin-bottom: 12px;
+
+}
+
+.start-card h1 {
+
+  color: #0071dc;
+
+  margin-bottom: 8px;
+
+}
+
+.start-card p {
+
+  color: #6b7280;
+
+  margin-bottom: 20px;
+
+}
+
+.batch-preview {
+
+  background: #f8fafc;
+
+  padding: 16px;
+
+  border-radius: 12px;
+
+  margin-bottom: 20px;
+
+  text-align: left;
+
+}
+
+.batch-preview p {
+
+  margin: 6px 0;
+
+  color: #1f2937;
+
+}
+
+.start-button {
+
+  width: 100%;
+
+  background: #0071dc;
+
+  color: white;
+
+  padding: 14px;
+
+  font-size: 17px;
+
+  border-radius: 10px;
+
+}
+
+#shoppingScreen {
+
+  display: none;
+
+}
   </style>
 
 </head>
 
 <body>
+<div class="start-screen" id="startScreen">
 
+  <div class="start-card">
+
+    <div class="start-logo">⚡</div>
+
+    <h1>Spark Batch Assist</h1>
+
+    <p>
+
+      Keep multiple customer orders separated while shopping.
+
+    </p>
+
+    <div class="batch-preview">
+
+      <p><strong>Batch:</strong> #SBA-1027</p>
+
+      <p><strong>Customers:</strong> A + B</p>
+
+      <p><strong>Total Items:</strong> 8</p>
+
+      <p><strong>Cart Setup:</strong> Side A / Side B</p>
+
+    </div>
+
+    <button class="start-button" onclick="startBatch()">
+
+      Start Batch
+
+    </button>
+
+  </div>
+
+</div>
+
+<div id="shoppingScreen">
 <header>
 
   <h1>⚡ Spark Batch Assist</h1>
@@ -623,9 +759,17 @@
   </div>
 
 </main>
-
+</div>
 <script>
+function startBatch() {
 
+  document.getElementById("startScreen").style.display = "none";
+
+  document.getElementById("shoppingScreen").style.display = "block";
+
+  window.scrollTo(0, 0);
+
+}
   const totalItems = 8;
 
   let pickedItems = 0;
