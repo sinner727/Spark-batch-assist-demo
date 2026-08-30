@@ -1174,9 +1174,40 @@ function showCheckout() {
 
       </div>
 
-      <button class="start-button" onclick="location.reload()">
+      <button class="start-button" onclick="showDelivery()">
 
         Start New Batch
+
+      </button>
+
+    </div>
+
+  `;
+
+  window.scrollTo(0, 0);
+
+}
+  function showDelivery() {
+
+  document.getElementById("shoppingScreen").innerHTML = `
+
+    <div class="guided-card">
+
+      <h2>🚗 Delivery Mode</h2>
+
+      <p>Checkout complete. Keep each customer's order separated during delivery.</p>
+
+      <div class="guided-cart-side">
+
+        📍 STOP 1 — Customer A
+
+      </div>
+
+      <p>Deliver Customer A's order first.</p>
+
+      <button class="start-button">
+
+        Customer A Delivered
 
       </button>
 
