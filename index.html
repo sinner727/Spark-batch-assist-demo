@@ -1109,11 +1109,47 @@ function showCheckout() {
 
     <div class="guided-card">
 
-      <h2>🛒 Ready for Checkout</h2>
+      <h2>🛒 Customer A Checkout</h2>
+<div class="guided-cart-side">
 
+  Checkout CART SIDE A first
+
+</div>
+<button class="start-button" onclick="checkoutCustomerB()">
+
+  Customer A Checked Out
+
+</button>
       <p>Customer A and Customer B orders are separated.</p>
 
       <p>Proceed to checkout while keeping each order on its assigned cart side.</p>
+
+    </div>
+
+  `;
+
+  window.scrollTo(0, 0);
+
+}
+  function checkoutCustomerB() {
+
+  document.getElementById("shoppingScreen").innerHTML = `
+
+    <div class="guided-card">
+
+      <h2>🛒 Customer B Checkout</h2>
+
+      <div class="guided-cart-side">
+
+        Checkout CART SIDE B
+
+      </div>
+
+      <button class="start-button">
+
+        Customer B Checked Out
+
+      </button>
 
     </div>
 
