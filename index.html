@@ -1234,7 +1234,7 @@ function showCheckout() {
 
       <p>Deliver Customer B's order.</p>
 
-      <button class="start-button">
+      <button class="start-button" onclick="finishDelivery()">
 
         Customer B Delivered
 
@@ -1247,6 +1247,35 @@ function showCheckout() {
   window.scrollTo(0, 0);
 
 } 
+  function finishDelivery() {
+
+  document.getElementById("shoppingScreen").innerHTML = `
+
+    <div class="guided-card">
+
+      <h2>🎉 Deliveries Complete</h2>
+
+      <p>Customer A and Customer B orders have been delivered successfully.</p>
+
+      <div class="guided-cart-side">
+
+        ✅ Batch completed successfully
+
+      </div>
+
+      <button class="start-button" onclick="location.reload()">
+
+        Start New Batch
+
+      </button>
+
+    </div>
+
+  `;
+
+  window.scrollTo(0, 0);
+
+}
 </script>
 
 </body>
