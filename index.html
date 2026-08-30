@@ -1007,7 +1007,11 @@ function completeGuidedItem() {
 
       <div class="guided-cart-side">
 
-        Ready for checkout
+        <button class="start-button" onclick="showCheckout()">
+
+  Continue to Checkout
+
+</button>
 
       </div>
 
@@ -1099,7 +1103,25 @@ function completeGuidedItem() {
     }
 
   }
+function showCheckout() {
 
+  document.getElementById("shoppingScreen").innerHTML = `
+
+    <div class="guided-card">
+
+      <h2>🛒 Ready for Checkout</h2>
+
+      <p>Customer A and Customer B orders are separated.</p>
+
+      <p>Proceed to checkout while keeping each order on its assigned cart side.</p>
+
+    </div>
+
+  `;
+
+  window.scrollTo(0, 0);
+
+}
 </script>
 
 </body>
