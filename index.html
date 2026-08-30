@@ -1205,7 +1205,7 @@ function showCheckout() {
 
       <p>Deliver Customer A's order first.</p>
 
-      <button class="start-button">
+      <button class="start-button" onclick="deliverCustomerB()">
 
         Customer A Delivered
 
@@ -1218,6 +1218,35 @@ function showCheckout() {
   window.scrollTo(0, 0);
 
 }
+ function deliverCustomerB() {
+
+  document.getElementById("shoppingScreen").innerHTML = `
+
+    <div class="guided-card">
+
+      <h2>🚗 Delivery Mode</h2>
+
+      <div class="guided-cart-side">
+
+        📍 STOP 2 — Customer B
+
+      </div>
+
+      <p>Deliver Customer B's order.</p>
+
+      <button class="start-button">
+
+        Customer B Delivered
+
+      </button>
+
+    </div>
+
+  `;
+
+  window.scrollTo(0, 0);
+
+} 
 </script>
 
 </body>
