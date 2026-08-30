@@ -1145,9 +1145,38 @@ function showCheckout() {
 
       </div>
 
-      <button class="start-button">
+ <button class="start-button" onclick="finishBatch()">
 
         Customer B Checked Out
+
+      </button>
+
+    </div>
+
+  `;
+
+  window.scrollTo(0, 0);
+
+}
+  function finishBatch() {
+
+  document.getElementById("shoppingScreen").innerHTML = `
+
+    <div class="guided-card">
+
+      <h2>✅ Batch Finished</h2>
+
+      <p>Customer A and Customer B have been checked out successfully.</p>
+
+      <div class="guided-cart-side">
+
+        Orders separated and ready for delivery
+
+      </div>
+
+      <button class="start-button" onclick="location.reload()">
+
+        Start New Batch
 
       </button>
 
